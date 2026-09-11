@@ -1,0 +1,20 @@
+name: demo-ci
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify controller-authored result
+        shell: bash
+        run: |
+          test -f notes/controller-native-result.md
+          test "$(cat notes/controller-native-result.md)" = "Controller-native integration completed."
